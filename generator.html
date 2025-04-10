@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>魔導ギルド受付：URL生成器</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap');
+
+    body {
+      background: url('https://www.transparenttextures.com/patterns/old-wall.png');
+      font-family: 'IM Fell English', serif;
+      color: #3b2b1b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(255, 248, 220, 0.95);
+      border: 4px double #5e3610;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #c49a6c;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="number"], input[type="url"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #7b4e2d;
+      border-radius: 6px;
+      background: #fffaf0;
+      font-family: inherit;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #7b4e2d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    .output {
+      margin-top: 20px;
+      background: #fff8dc;
+      padding: 10px;
+      border: 1px solid #7b4e2d;
+      border-radius: 6px;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ 魔導ギルド受付：URL生成器</h1>
+    <label>名前（HN可）</label>
+    <input type="text" id="name">
+
+    <label>年齢</label>
+    <input type="text" id="age">
+
+    <label>クラス</label>
+    <input type="text" id="class">
+
+    <label>スキル（カンマ区切り）</label>
+    <input type="text" id="skills">
+
+    <label>所属</label>
+    <input type="text" id="guild">
+
+    <label>魔力（自由記述）</label>
+    <input type="text" id="mana">
+
+    <label>特性</label>
+    <input type="text" id="traits">
+
+    <label>飛び先URL</label>
+    <input type="url" id="url">
+
+    <button onclick="generateURL()">魔法陣を生成</button>
+    <div class="output" id="result"></div>
+  </div>
+
+  <script>
+    function generateURL() {
+      const base = 'https://higashiikenaga.github.io/magic_industry/index.html';
+      const params = new URLSearchParams();
+      params.set('name', document.getElementById('name').value);
+      params.set('age', document.getElementById('age').value);
+      params.set('class', document.getElementById('class').value);
+      params.set('skills', document.getElementById('skills').value);
+      params.set('guild', document.getElementById('guild').value);
+      params.set('mana', document.getElementById('mana').value);
+      params.set('traits', document.getElementById('traits').value);
+      params.set('url', document.getElementById('url').value);
+
+      const fullURL = `${base}?${params.toString()}`;
+      const result = document.getElementById('result');
+      result.innerHTML = `<strong>生成された魔法陣URL：</strong><br><input type='text' value='${fullURL}' readonly onclick='this.select();document.execCommand("copy")'>\n<br><em>※タップでコピーされます</em>`;
+    }
+  </script>
+</body>
+</html>
