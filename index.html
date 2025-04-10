@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>魔法風技術者カード</title>
+  <style>
+    body {
+      background: linear-gradient(#0e0c1d, #1a1035);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #8e44ad;
+      border-radius: 20px;
+      padding: 30px;
+      width: 350px;
+      box-shadow: 0 0 15px #9b59b6;
+    }
+    .card h1 {
+      margin-top: 0;
+      color: #e0b3ff;
+      text-align: center;
+    }
+    .card p {
+      margin: 5px 0;
+      line-height: 1.5em;
+    }
+    .card a {
+      display: block;
+      margin-top: 20px;
+      color: #a29bfe;
+      text-align: center;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 id="name">魔法使いの名</h1>
+    <p><strong>年齢：</strong><span id="age"></span></p>
+    <p><strong>クラス：</strong><span id="class"></span></p>
+    <p><strong>スキル：</strong><span id="skills"></span></p>
+    <p><strong>所属：</strong><span id="guild"></span></p>
+    <p><strong>魔力：</strong><span id="mana"></span></p>
+    <p><strong>特性：</strong><span id="traits"></span></p>
+    <a id="link" href="#" target="_blank">▶ 魔法陣を展開する</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('name').textContent = params.get('name') || '名無しの魔導師';
+    document.getElementById('age').textContent = params.get('age') || '-';
+    document.getElementById('class').textContent = params.get('class') || '-';
+    document.getElementById('skills').textContent = params.get('skills') || '-';
+    document.getElementById('guild').textContent = params.get('guild') || '-';
+    document.getElementById('mana').textContent = params.get('mana') || '-';
+    document.getElementById('traits').textContent = params.get('traits') || '-';
+    const url = params.get('url');
+    const link = document.getElementById('link');
+    if (url) {
+      link.href = url;
+    } else {
+      link.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
