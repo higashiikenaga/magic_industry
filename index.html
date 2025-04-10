@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>魔法風技術者カード</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap');
+
     body {
-      background: linear-gradient(#0e0c1d, #1a1035);
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+      font-family: 'IM Fell English', serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -16,56 +17,99 @@
       margin: 0;
     }
     .card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #8e44ad;
-      border-radius: 20px;
+      background: rgba(255, 255, 240, 0.85);
+      border: 5px double #7b4e2d;
+      border-radius: 16px;
       padding: 30px;
-      width: 350px;
-      box-shadow: 0 0 15px #9b59b6;
+      width: 360px;
+      box-shadow: 0 0 20px #d4af37;
+      position: relative;
+      z-index: 1;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      right: -30px;
+      bottom: -30px;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0) 80%);
+      border-radius: 50%;
+      animation: spin 15s linear infinite;
+      z-index: 0;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .card * {
+      position: relative;
+      z-index: 2;
     }
     .card h1 {
       margin-top: 0;
-      color: #e0b3ff;
+      color: #5e3610;
       text-align: center;
+      font-size: 1.6em;
     }
     .card p {
       margin: 5px 0;
-      line-height: 1.5em;
+      line-height: 1.4em;
+      color: #3b2b1b;
+    }
+    .label {
+      font-weight: bold;
+      color: #7b4e2d;
     }
     .card a {
       display: block;
       margin-top: 20px;
-      color: #a29bfe;
+      color: #8b4513;
       text-align: center;
-      text-decoration: none;
+      text-decoration: underline;
+      cursor: pointer;
+      user-select: all;
+    }
+    .badge {
+      font-size: 1.2em;
+      margin-right: 6px;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1 id="name">魔法使いの名</h1>
-    <p><strong>年齢：</strong><span id="age"></span></p>
-    <p><strong>クラス：</strong><span id="class"></span></p>
-    <p><strong>スキル：</strong><span id="skills"></span></p>
-    <p><strong>所属：</strong><span id="guild"></span></p>
-    <p><strong>魔力：</strong><span id="mana"></span></p>
-    <p><strong>特性：</strong><span id="traits"></span></p>
-    <a id="link" href="#" target="_blank">▶ 魔法陣を展開する</a>
+    <h1 id="name"><span class="badge">🛡️</span>名無しの魔導師</h1>
+    <p><span class="label">年齢：</span><span id="age"></span></p>
+    <p><span class="label">クラス：</span><span id="class"></span></p>
+    <p><span class="label">スキル：</span><span id="skills"></span></p>
+    <p><span class="label">所属：</span><span id="guild"></span></p>
+    <p><span class="label">魔力：</span><span id="mana"></span></p>
+    <p><span class="label">特性：</span><span id="traits"></span></p>
+    <a id="link" href="#" target="_blank">▶ 魔法陣を展開する（長押しでURLコピー可）</a>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    document.getElementById('name').textContent = params.get('name') || '名無しの魔導師';
+    const name = params.get('name') || '名無しの魔導師';
+    document.getElementById('name').innerHTML = `<span class="badge">🛡️</span>${name}`;
     document.getElementById('age').textContent = params.get('age') || '-';
     document.getElementById('class').textContent = params.get('class') || '-';
     document.getElementById('skills').textContent = params.get('skills') || '-';
     document.getElementById('guild').textContent = params.get('guild') || '-';
     document.getElementById('mana').textContent = params.get('mana') || '-';
     document.getElementById('traits').textContent = params.get('traits') || '-';
+
     const url = params.get('url');
     const link = document.getElementById('link');
     if (url) {
       link.href = url;
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText(url).then(() => {
+          alert('URLをコピーしました！');
+          window.open(url, '_blank');
+        });
+      });
     } else {
       link.style.display = 'none';
     }
